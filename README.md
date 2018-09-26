@@ -1,6 +1,6 @@
 This repository contains code and data accompanying the following paper: 
 
-##### Analysis Code and Data of "Representation of Abstract Semantic Knowledge in Populations of Human Single Neurons in the Medial Temporal Lobe" 
+### Representation of Abstract Semantic Knowledge in Populations of Human Single Neurons in the Medial Temporal Lobe
 
 Thomas P. Reber<sup>1,2*</sup>, Marcel Bausch<sup>1</sup>, Sina Mackay<sup>1</sup>, Jan Boström<sup>3</sup>, Christian E. Elger<sup>1</sup>, Florian Mormann<sup>1</sup>
 
@@ -13,7 +13,7 @@ Thomas P. Reber<sup>1,2*</sup>, Marcel Bausch<sup>1</sup>, Sina Mackay<sup>1</su
 
 If you have any questions, please contact <treber@uni-bonn.de>. All data files and code are in Matlab format.
 
-## Code
+### Code
 We used Matlab R2017 with the statistics and machine learning toolbox, as well as the signal processing toolbox. 
 
 - `ospr_figure_rsa.m` reproduces Figure 2 in the paper.
@@ -22,8 +22,8 @@ We used Matlab R2017 with the statistics and machine learning toolbox, as well a
 
 Further .m files in this repository are included because they are called by the above scripts at some point or another.
 
-## Data
-### `zvals.mat`
+### Data
+#### `zvals.mat`
 Containes z-scored firing rates for each stimulus-unit combination, and some lookup variables. Please refer to the paper for the methods used to obtain these z-scores. 
 
 - `zvals`: a nunits X nstimuli matrix of zscores
@@ -31,7 +31,7 @@ Containes z-scored firing rates for each stimulus-unit combination, and some loo
 - `stim_lookup`: a cell of size nstimuli, i.e., 100 of names of the presented images (e.g., wild\_animals\_6). Entries correspond to the columns in zvals variable above.
 - `cat_lookup`: a cell of size nstimuli = 100 of names of the category the images belong to. Entries correspond to the columns in zvals variable above.
 
-### `zvals_trial.mat`
+####`zvals_trial.mat`
 Containes z-scored firing rates for each trial-unit combination, and some lookup variables. Please refer to the paper for the methods used to obtain these z-scores. 
 
 - `zvals`: a nunits X nstrials matrix of zscores
@@ -39,7 +39,7 @@ Containes z-scored firing rates for each trial-unit combination, and some lookup
 - `stim_lookup`: a cell of size ntrials, i.e., 1000 of names of the presented images (e.g., wild\_animals\_6) entries correspond to the columns in zvals variable above
 - `cat_lookup`: a cell of size ntrials, i.e., 1000 of names of the category the images belong to entries correspond to the columns in zvals variable above
 
-### `category_responses.mat`
+#### `category_responses.mat`
 Containes whether a stimulus elicited a neuronal response for each unit-stimulus combination. 
 
 - `consider_rs`: a nunits X nstimuli matrix of booleans that have the value 'true' if a stimulus elicits a response according to the criterion mentionen in the paper
@@ -49,11 +49,11 @@ Containes whether a stimulus elicited a neuronal response for each unit-stimulus
 - `stim_lookup`: a cell of size nstimuli, i.e., 100 of names of the presented images (e.g., wild\_animals\_6) entries correspond to the columns in the `consider_rs` and `pvals_rs` variables above
 - `cat_lookup`: a cell of size nstimuli, i.el, 100 of names of the category the images belong to entries correspond to the columns in `consider_rs` and `pvals_rs` variables above
 
-### `classification_results_*.mat`
+#### `classification_results_*.mat`
 .mat files starting `classification_results` are output produced by the script `ospr_classify.m` mentioned above. For details on the coding anlyses, please refer to the method section of the paper or inspect `ospr_classify.m` and `ospr_doclassperm.m`.
 
 
-### `regions.mat`
+#### `regions.mat`
 Contains a struct with names of anatomical Regions, i.e., AM, HC, EC, PHC, and the names of electrode localizations (sites) assign to anatomical regions e.g. 
 
 ```
