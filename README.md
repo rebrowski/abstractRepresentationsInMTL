@@ -31,7 +31,7 @@ Containes z-scored firing rates for each stimulus-unit combination, and some loo
 - `stim_lookup`: a cell of size nstimuli, i.e., 100 of names of the presented images (e.g., wild\_animals\_6). Entries correspond to the columns in zvals variable above.
 - `cat_lookup`: a cell of size nstimuli = 100 of names of the category the images belong to. Entries correspond to the columns in zvals variable above.
 
-####`zvals_trial.mat`
+#### `zvals_trial.mat`
 Containes z-scored firing rates for each trial-unit combination, and some lookup variables. Please refer to the paper for the methods used to obtain these z-scores. 
 
 - `zvals`: a nunits X nstrials matrix of zscores
