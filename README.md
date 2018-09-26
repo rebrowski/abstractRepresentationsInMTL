@@ -1,6 +1,17 @@
-# Analysis Code and Data of "Abstract Semantic Represetations in MTL Neurons" (Reber et al. in prep.)
+This repository contains code and data accompanying the following paper: 
 
-This repository contains code and data accompanying "Representation of Abstract Semantic Knowledge in Populations of Human Single Neurons in the Medial Temporal Lobe". If you have any questions, please contact <treber@uni-bonn.de>. All data files and code are in Matlab format.
+##### Analysis Code and Data of "Representation of Abstract Semantic Knowledge in Populations of Human Single Neurons in the Medial Temporal Lobe" 
+
+Thomas P. Reber<sup>1,2*</sup>, Marcel Bausch<sup>1</sup>, Sina Mackay<sup>1</sup>, Jan Boström<sup>3</sup>, Christian E. Elger<sup>1</sup>, Florian Mormann<sup>1</sup>
+
+<sup>1</sup> Department of Epileptology, University of Bonn Medical Centre, Bonn, Germany
+
+<sup>2</sup> Faculty of Psychology, Swiss Distance Learning University, Brig, Switzerland
+
+<sup>3</sup> Department of Neurosurgery, University of Bonn Medical Centre, Bonn, Germany
+
+
+If you have any questions, please contact <treber@uni-bonn.de>. All data files and code are in Matlab format.
 
 ## Code
 We used Matlab R2017 with the statistics and machine learning toolbox, as well as the signal processing toolbox. 
