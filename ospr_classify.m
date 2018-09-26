@@ -10,7 +10,7 @@ analyses = {'classify_category_from_meanresponse', ...
 select_units = {'responsive', 'all'};
 
 fracholdout = 0.5;
-nperms = 10;  % numer of random repartitionings of data into
+nperms = 100;  % numer of random repartitionings of data into
               % training and test set
 algo = 'svm'; % support vector machiens
 codingscheme = 'onevsall'; 

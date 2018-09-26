@@ -1,29 +1,40 @@
 
-load category_responses
+load category_responses % produced by ospr_category_responses.m
 load ospr_colors
 load regions
 nregions = numel(regions);
 
 %% define what we want to look at
-Analyses = {'CategoriesFromTrials', ...
+Analyses = {'CategoriesFromMeanResponse', ...
             'StimuliFromTrials'};
+analyseslabels = {'MR\rightarrow SC', 'T\rightarrow SI'};
 
-analyseslabels = {'C T', 'S T'};
-
+allong = {{'semantic'; 'generlization'}, {'decode identity'; 'from trials'}}; 
 % set different color max/mins for each analysis
+
 caxticks(1,:) = [0 50];
 caxticks(2,:) = [0 10];
 
 %whichUnits ='all' or 'responsive';
-whichUnits = 'responsive';
+whichUnits = 'all';
 
-outfn = [secondleveldir, filesep, 'ospr_classification_results_v2_', ...
-         whichUnits];
+whichanalyses = [1 2];
+
+Analyses = Analyses(whichanalyses);
+analyseslabels = analyseslabels(whichanalyses);
+allong = allong(whichanalyses);
+caxticks = caxticks(whichanalyses,:);
+
+outfn = ['ospr_classification_results', ...
+         whichUnits , '_' ];
+for a = 1: numel(Analyses)
+    outfn = [outfn Analyses{a}(1:2), '_'];     
+end
 
 %% setup figure
-figh = figure('color', 'w', 'visible', 'off');
+figh = figure('color', 'w', 'visible', 'on');
 figh.PaperUnits = 'inches';
-figh.PaperPosition = [0 0 7.4 3.2];
+figh.PaperPosition = [0 0 7.4 1.65*numel(Analyses)];
 % display it somewhat similar to what will be plotted
 figh.Position = [200 200  figh.PaperPosition(3)*150 figh.PaperPosition(4)*150];
 
@@ -34,17 +45,21 @@ markSize = 3;
 lineWidht = 2;
 
 % setup anntoations
-annot = ['ABCDEFGHIKLMOPQRSTUVWXYZ'];
-aidx  = [ 2,3,4,5,6,7,8,9,1];
+annot = ['ABCDEFGHIKLMNOPQRSTUVWXYZ'];
+if numel(Analyses) == 2                    
+aidx  = [ 2,3,4,5, 7,8,9,10, 1,6];
+elseif numel(Analyses) == 3;
+    aidx = [2,3,4,5, 7,8,9,10, 12,13,14,15, 1,6,11];
+end
 
 ac = 1;
 %% setup subplot positions for the confusion matrices
-nrows = 2;
+nrows = numel(Analyses);
 ncols = 5;
 gapwidth_h = 10;%15;
 gapwidth_v = 10;%5;
 overall_width = 0.9;
-overall_height = 0.8;
+overall_height = 0.85;
 
 pos = setup_plot(nrows, ncols, gapwidth_h, gapwidth_v, overall_height, ...
                         overall_width);
@@ -92,10 +107,10 @@ for a = 1:numel(Analyses)
         e =  strfind(catticks{c}, ' ');
         if isempty(e)
             catticksshort{c} = catticks{c}(1:2);
-            catticksshort{c} = regexprep(catticksshort{c},'(\<[a-z])','${upper($1)}');
+            %catticksshort{c} = regexprep(catticksshort{c},'(\<[a-z])','${upper($1)}');
         else
             catticksshort{c} = catticks{c}([1,e+1]);
-            catticksshort{c} = regexprep(catticksshort{c},'(\<[a-z]+)','${upper($1)}');
+            %catticksshort{c} = regexprep(catticksshort{c},'(\<[a-z]+)','${upper($1)}');
         end
 
     end
@@ -107,7 +122,7 @@ for a = 1:numel(Analyses)
     for r = 1:nregions
         % position of subplot
         axpos = squeeze(pos(a, r+1,:));
-        axpos(2) = axpos(2) + 1*(1-overall_height); % move up
+        axpos(2) = axpos(2) + 0.9*(1-overall_height); % move up
         axpos(1) = axpos(1) + 0.6*(1-overall_width); % move to the right
         ax = axes('Position', axpos);
         confaxes(a,r) = ax;
@@ -123,18 +138,27 @@ for a = 1:numel(Analyses)
         conftoplot = 100 * conftoplot./sum(conftoplot(:,1));
         pch = pcolor(conftoplot);
         pch.LineStyle = 'none';
-        cm = colormap('hot');        
+        
+        %colormapname = 'hot';
+        colormapname = 'jet';
+        
+        cm = colormap(colormapname);        
+        
+        if strcmp(colormapname, 'hot')
         cm(end,:) = [0.95 0.95 0.95]; % not toally white such that
                                      % we can use imagemagick to
                                      % replace white with
                                      % tranparency afterwards
+        end
+        
         colormap(cm);
         set(ax, 'YDir', 'reverse')
         set(ax, 'FontSize', fontSize);
         if a == 1
-            title(regions(r).name, 'FontWeight', 'normal', 'FontSize', ...
-                  fontSize, 'color', regioncolors(r,:));
+            title([regions(r).name] , 'FontWeight', 'normal', 'FontSize', ...
+                  fontSize) 
         end
+        
         caxis(caxticks(a,:));            
         
         if r == 4
@@ -200,83 +224,33 @@ end
 
 kytix = [0:0.2:1];
 
-axpos = squeeze(pos(2, 1,:));
-axpos(2) = axpos(2) + axpos(4) * 0.8;
-axpos(3) = axpos(3) * 1.3;
-axpos(4) = axpos(4) * 1.5; 
+%% plot boxplots for each analysis
+for a = 1:numel(Analyses)
+    axpos = squeeze(pos(a, 1,:));
+    axpos(2) = axpos(2) + 0.9*(1-overall_height); % move up
+    axpos(1) = axpos(1) + 0.2*(1-overall_width); % move to the
+                                                 % right
+    axpos(3) = axpos(3) * 1.2;
+    axes('Position', axpos)
+    
+    idx = strcmp(alab, analyseslabels{a});
+    bph = boxplot(dat(idx), rlab(idx), ...
+                  'factorgap', 0, ...
+                  'Color', 'k', ...
+                  'Notch', 'on', 'Symbol', '.k');%,'LabelOrientation',
+                                                 %'inline');
 
-axes('Position', axpos)
+    title(allong{a}, 'FontSize', fontSize, 'FontWeight', 'normal')
 
-bph = boxplot(dat, {alab rlab}, ...
-              'factorgap', 10, ...
-              'Color', 'k', 'FactorSeparator', [1], ...
-              'Notch', 'on', 'Symbol', '.k');%,'LabelOrientation',
-                                             %'inline');
-set(gca, 'XTickLabel', {' '})
-% $$$ set(gca, 'XTick', [0:0.5:15])
-% $$$ set(gca, 'XTickLabel', [0:0.5:15])
-% $$$ text(0, -0.1, {'class from ', 'mean response'}, ...
-% $$$      'FontSize', fontSize, 'Rotation', 0)
-
-text(2.5, -0.02, {'stimulus'}, 'FontSize', fontSize, ...
-     'Rotation', 0, 'VerticalAlignment', 'top', 'HorizontalAlignment', ...
-     'center')
-text(2.5, -0.1, {'class'}, 'FontSize', fontSize, ...
-     'Rotation', 0, 'VerticalAlignment', 'top', 'HorizontalAlignment', ...
-     'center')
-
-text(7.5, -0.02, {'stimulus'}, 'FontSize', ...
-     fontSize, 'Rotation', 0, 'VerticalAlignment', 'top', 'HorizontalAlignment', ...
-     'center')
-text(7.5, -0.1, {'identity'}, 'FontSize', ...
-     fontSize, 'Rotation', 0, 'VerticalAlignment', 'top', 'HorizontalAlignment', ...
-     'center')
-
-h = findobj(gca,'Tag','Box');
-h2 = findobj(gca,'tag','Median');
-
-rcs = regioncolors(4:-1:1, :); % boxes are in reverse order
-for j=1:numel(h) 
-    ci = mod(j,nregions);
-    if ci == 0; ci = nregions; end
-    patch(get(h(j),'XData'),get(h(j),'YData'),'y','FaceColor', ...
-              rcs(ci,:))%, 'FaceAlpha', .5);
+    h = findobj(gca,'Tag','Box');
+    h2 = findobj(gca,'tag','Median');
+    ylim([0 1])
+    box off
+    ylabel('\kappa')
+    set(gca, 'FontSize', fontSize);
+    add_text_topleft(gca,annot(aidx(ac)),0.01, 0.04, fontSize, 'bold');
+    ac = ac + 1;
 end
 
-box off
-ylabel('Decoding Performance (\kappa)')
-set(gca, 'FontSize', fontSize);
-add_text_topleft(gca,annot(aidx(ac)),0.01, 0.04, fontSize, 'bold');
-
-lax =axes('Position', [0.04 0.00 0.1 0.15]);
-hold on
-for r = 1:numel(regions)
-    plot(0, r, 'o', 'color', regioncolors(r,:), 'MarkerFaceColor', ...
-         regioncolors(r,:));
-    text(0.5, r, regions(r).name, 'FontSize',fontSize);
-end
-box off
-axis off
-
-
-% $$$ 
-% $$$ c = 1;
-% $$$ for m = 5:-1:1
-% $$$     text(0, m, strrep(catticks{c}, '_', ' '), 'color', ...
-% $$$          category_colors(c,:),'FontSize', fontSize) 
-% $$$     c = c + 1;
-% $$$ end
-% $$$ 
-% $$$ for m = 5:-1:1
-% $$$     text(5, m, strrep(catticks{c}, '_', ' '), 'color', ...
-% $$$          category_colors(c,:), 'FontSize', fontSize) 
-% $$$     c = c+1;
-% $$$ end
-% $$$ xlim(lax, [0 10]);
-% $$$ ylim(lax, [0 6]);
-% $$$ axis off
-% $$$ 
-
+outfn = sprintf('%s_%dperms_%s', outfn, nperms,codingscheme)
 print(figh, [outfn '.png'],'-dpng','-r600');
-%% trim and save a transparent version 
-system(['convert ' outfn '.png  -trim -transparent white ' outfn '_t.png']);
