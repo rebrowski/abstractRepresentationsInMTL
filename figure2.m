@@ -4,7 +4,7 @@ load ospr_colors
 load regions
 
 %% open a figure
-figh = figure('color', 'w', 'visible', 'on');
+figh = figure('color', 'w', 'visible', 'off');
 figh.PaperUnits = 'inches';
 figh.PaperPosition = [0 0 7.4 7.2] * 0.7;
 % display it somewhat similar to what will be plotted
@@ -46,9 +46,9 @@ ncats = numel(catticks);
 nstims = numel(cat_lookup);
 
 %% load/calcualte response probabilities boostrapped CI
-%if ~exist('response_probabilites_bootstrap.mat', 'file')
+if ~exist('response_probabilites_bootstrap.mat', 'file')
     ospr_bootstrap_category_responses
-%end
+end
 load response_probabilites_bootstrap.mat
 
 toplot = nsigcatboot ./ subsample_size ./ ncats * 100;
@@ -63,9 +63,9 @@ set(rpax, 'XTickLabel', {regions(:).name})
 box off
 grid on
 %% plot results of fisher exact test on bars with sign different repsonse probabilities
-%if ~exist('fisherOnCategories.mat')
+if ~exist('fisherOnCategories.mat')
     ospr_stats_zvals_rprobs()
-%end
+end
 load fisherOnCategories.mat
 
 [ridx catidx] = find(fp < pcrit & foddsr > 1);
@@ -114,7 +114,7 @@ axis off
 
 %% do some unit descritptives
 dax = subplot(2,2,3);
-load([secondleveldir ,filesep, 'unit_descriptives.mat'])
+load unit_descriptives
 
 % do a plot
 
@@ -188,10 +188,7 @@ for r = 1:nregions
                           'response: %.1f'], ...
                          regions(r).name, 100 * c(k)./n))
         end
-        
-        
     end
-    
     
     plot(0:m-1,c./n * 100, 'Linewidth', 1, 'Color', regioncolors(r,:))
 
@@ -200,8 +197,10 @@ for r = 1:nregions
     ylabel('% units');
     xlabel('responses per unit')
 end
+
 xlim([0 35])
 ylim([0 100])
+
 set(gca, 'FontSize', fontSize);
 box off
 grid on

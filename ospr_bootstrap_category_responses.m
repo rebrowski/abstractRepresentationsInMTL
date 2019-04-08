@@ -5,8 +5,8 @@ load regions
 load zvals 
 
 %% some constants
-subsample_size = 70 %700; % cells per region, EC 822, PHC 819
-nbootstraps = 20 %2000; 
+subsample_size = 700; % cells per region, EC 822, PHC 819
+nbootstraps = 2000; 
 nregions = numel(regions);
 catticks = cat_lookup(1:10:100);
 ncats = numel(catticks);
