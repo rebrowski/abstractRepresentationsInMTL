@@ -4,7 +4,7 @@ load ospr_colors
 load regions
 
 %% open a figure
-figh = figure('color', 'w', 'visible', 'off');
+figh = figure('color', 'w', 'visible', 'on');
 figh.PaperUnits = 'inches';
 figh.PaperPosition = [0 0 7.4 7.2] * 0.7;
 % display it somewhat similar to what will be plotted
