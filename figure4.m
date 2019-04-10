@@ -1,3 +1,4 @@
+clear
 
 load category_responses % produced by ospr_category_responses.m
 load ospr_colors

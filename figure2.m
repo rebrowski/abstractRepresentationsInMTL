@@ -1,3 +1,4 @@
+clear
 
 load category_responses
 load ospr_colors
@@ -15,7 +16,7 @@ fontSizeLarge = 10;
 markSize = 4;
 lineWidht = 2;
 
-%% some constants
+%% format ticks
 catticks = cat_lookup(1:10:end);
 catticks = cellfun(@(x) strrep(x, '_', ' '), catticks, 'UniformOutput', false);
 for c =1:numel(catticks)

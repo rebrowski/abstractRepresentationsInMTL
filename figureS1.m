@@ -1,4 +1,4 @@
-
+clear
 
 % this script plots all stimuli on a 10x10 grid with category
 

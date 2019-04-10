@@ -1,16 +1,32 @@
+clear
+
 %% Figure 1
 % load some preliminaries
 load category_responses
 load ospr_colors
 
-% info on units to plot
+%% info on units to plot
 ex(1).fn = '033e06timesCSC10.mat';
 ex(1).fnsp = '033e06segmentedSpikes.mat';
 ex(1).clusid = 1;
 ex(1).site = 'LAH';
 ex(1).unitId = 900; % index in lookup
 
-% some constants 
+
+ex(2).fn = '034e14timesCSC50.mat';
+ex(2).fnsp = '034e14segmentedSpikes.mat';
+ex(2).clusid = 4;
+ex(2).site = 'RA';
+ex(2).unitId = 1406; % index in lookup
+
+
+ex(3).fn = '030e16timesCSC47.mat';
+ex(3).fnsp = '030e16segmentedSpikes.mat';
+ex(3).clusid = 2;
+ex(3).site = 'RA';
+ex(3).unitId = 272; % index in lookup
+
+%% some constants 
 kernelwidth = 0.05; %seconds kernel convolution for inst. firing rates
 resolution = 0.001; 
 
@@ -21,13 +37,13 @@ howmany = 6;
 catticks = cat_lookup(1:10:end);
 catticks = cellfun(@(x) strrep(x, '_', ' '), catticks, 'UniformOutput', false);
 
-% setup anotations
+%% setup anotations
 annot = ['ABCDEFGHIKLMOPQRSTUVWXYZ'];
 pbi = 0;
 rasterids = [numel(ex)+1:numel(annot)];
 ri = 1;
 
-% open a figure
+%% open a figure
 figh = figure('color', 'w', 'visible', 'on');
 figh.PaperUnits = 'inches';
 figh.PaperPosition = [0 0 7.4 1*length(ex)];
@@ -42,7 +58,7 @@ figh.Position = [200 200  figh.PaperPosition(3)*150 figh.PaperPosition(4)*150]; 
 fontSize = 8;
 fontSizeLarge = 10;
 
-% plot units
+%% plot units
 for wi = 1:numel(ex)
     
     %% do a density plot first
