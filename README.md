@@ -83,3 +83,6 @@ Contains structs `cherries` with the field `cherries.trial`. Ich entry there, co
 
 #### `*timesCSC*.mat`
 Contains non-segmented data on sorted spikes in the format of [https://github.com/csn-le/wave_clus](wave_clus).
+
+### Stimuli
+All images used as stimuli can be found in the `stimulus` directory.
