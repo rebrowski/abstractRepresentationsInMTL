@@ -78,8 +78,8 @@ Note that data in the .mat files also includes units that are not reported int t
 ```
 idx = strcmp(cluster_lookup.regionname == 'other');
 ```
-#### `*segmentedSpikes.mat`
+#### `&ast;segmentedSpikes.mat`
 Contains structs `cherries` with the field `cherries.trial`. Ich entry there, contains spike times relative to stimulus onset. The strcut `conditions` contains lookup variables to identify trials of interest. Please refer to `figure1.m` for examples of how these data can be analyzed.
 
-#### `\*timesCSC\*.mat`
+#### `&ast;timesCSC&ast;.mat`
 Contains non-segmented data on sorted spikes in the format of [https://github.com/csn-le/wave_clus](wave_clus).
